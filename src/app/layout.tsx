@@ -1,20 +1,25 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { signIn } from 'next-auth/react'
+import {connectToMongo} from './api/mongodb/mongodb'
 
 export const metadata: Metadata = {
-  title: 'To do or not to do',
-  description: 'Todo',
+    title: 'To do or not to do',
+    description: 'Todo',
 }
 
-export default function RootLayout({
-  children,
+export default async function RootLayout({
+    children,
 }: {
-  children: React.ReactNode
+    children: React.ReactNode
 }) {
-  return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  )
+    //let session = await getUserSession()
+    //console.log("layout session:",session)
+    await connectToMongo()
+    return (
+        <html lang="en">
+            <body>{children}</body>
+        </html>
+    )
 }
