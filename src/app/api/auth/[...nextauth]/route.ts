@@ -3,30 +3,16 @@ import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { CredentialsProviderType } from "next-auth/providers/credentials";
 import { NextAuthOptions } from "next-auth";
+import { connectToMongo } from "../../mongodb/mongodb";
 
 type User = {
-    id:string,
-    name:string,
-    email:string,
-    image:null
+    id: string,
+    name: string,
+    email: string,
+    image: null
 } | null
 
-/* export default function SignIn({
-    csrfToken,
-  }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-    return (
-      <form method="post" action="/api/auth/signin/email">
-        <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
-        <label>
-          Email address
-          <input type="email" id="email" name="email" />
-        </label>
-        <button type="submit">Sign in with Email</button>
-      </form>
-    )
-  } */
-
-const authOptions:NextAuthOptions = {
+const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
             name: "credentials",
@@ -34,17 +20,20 @@ const authOptions:NextAuthOptions = {
                 username: { label: "username", type: "text", placeholder: "nickname" },
                 password: { label: "password", type: "password" }
             },
-            async authorize(credentials,req) {
-                if(!credentials?.username || !credentials?.password)
+            async authorize(credentials, req) {
+                const db = await connectToMongo()
+                if (!credentials?.username || !credentials?.password)
                     return null
                 //const user = await "seach in db" login(credentials?.username,credentials?.password)
-                console.log("authorize called",credentials)
-                let user:User = { id: "1", name: "user1", email: "qwerty",image:null }
-                //let user = null
-                //console.log("user:",user)
-                if (user) {
-                    console.log("return user:",user)
-                    return user
+                console.log("authorize called", credentials)
+                //let user:User = { id: "1", name: "user1", email: "qwerty",image:null }
+                let [compare] = await db.collection(credentials?.username)
+                .find({ pwd: credentials?.password })
+                .toArray()
+                console.log("user:", compare)
+                if (compare) {
+                    console.log("return user:", {user:{id:credentials?.username,name:credentials?.username}})
+                    return {id:credentials?.username,name:credentials?.username}
                 } else {
                     return null
                 }
@@ -54,8 +43,8 @@ const authOptions:NextAuthOptions = {
     session: {
         strategy: "jwt"
     },
-    pages:{
-        signIn:"/signin"
+    pages: {
+        signIn: "/signin"
     },
     secret: process.env.NEXTAUTH_SECRET,
     debug: process.env.NODE_ENV === "development",

@@ -9,15 +9,15 @@ import { NextApiRequest, NextApiResponse } from "next";
 export default function Button({ sessionInfo }: { sessionInfo: Session | null }) {
 
     return sessionInfo
-        ? <button onClick={async () => {
-            await signOut();
+        ? <button onClick={() => {
             console.log("signin")
+            signOut();
         }}>
             You ar Signed as {sessionInfo.user?.name}<br /> Sign out
         </button>
-        : <button onClick={async () => {
-            await signIn("credentials");
+        : <button onClick={() => {
             console.log("awaited signin")
+            signIn();
         }}>
             Sign in
         </button>
