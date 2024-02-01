@@ -18,8 +18,8 @@ export async function connectToMongo() {
         //let dbs = await client.listDatabases()//listDatabases(client);
         let databasesList = await client.db().admin().listDatabases();
         let anton = await db.collection("anton").find({}).toArray()
-        console.log(anton)
-        console.log("!!!!!!!!!!!!!!!!!", databasesList)
+        //console.log(anton)
+        //console.log("!!!!!!!!!!!!!!!!!", databasesList)
     } catch (e) {
         console.log("__Error__", e)
     }

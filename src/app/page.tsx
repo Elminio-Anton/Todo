@@ -1,7 +1,8 @@
-import Button from "./components/login-button"
+import SignInLink from "./components/login-link"
 import { getSession } from "next-auth/react";
 import { Session } from "next-auth";
 import {headers} from "next/headers"
+import Link from "next/link";
 
 export default async function Home() {
     let session:any = await fetch(`http://localhost:3000/api/session`,{
@@ -24,7 +25,8 @@ export default async function Home() {
                 Hi, it's a TODO application with time management authentication and database.
                 Vercel storage is not limited, so this application is also limited by 10 accounts 3 groups of 10 taasks for each.
             </p>
-            <Button sessionInfo={session}/>
+            <SignInLink sessionInfo={session}/>
+            <Link href="/signup">Sign up</Link>
             {/* todo sign up button */}
         </>
     )
