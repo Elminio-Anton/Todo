@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { signIn } from 'next-auth/react'
 import {connectToMongo} from './api/mongodb/mongodb'
+import styles from "./page.module.scss"
 
 export const metadata: Metadata = {
     title: 'To do or not to do',
@@ -19,7 +20,7 @@ export default async function RootLayout({
     await connectToMongo()
     return (
         <html lang="en">
-            <body>{children}</body>
+            <body className={styles.body}>{children}</body>
         </html>
     )
 }

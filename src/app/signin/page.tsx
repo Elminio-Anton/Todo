@@ -3,49 +3,44 @@
 import { signIn } from "next-auth/react"
 import { useSearchParams } from "next/navigation"
 import { FormEvent, FormEventHandler, MouseEventHandler, useRef, useState } from "react"
-
-
+import styles from "./styles.module.scss"
 
 export default function Form() {
     const name = useRef<HTMLInputElement>(null)
     const pwd = useRef<HTMLInputElement>(null)
     const searchParams = useSearchParams();
     const error = searchParams.get("error");
-    console.log("!!!!!")
-    console.log("searchParams",searchParams)
-    console.log("searchParams",searchParams.keys())
-    console.log("get error",searchParams.get("error"))
-    console.log("get callbackUtl",searchParams.get("callbackUrl"))
-    console.log("!!!!!")
-    const onSubmit:FormEventHandler = function(event:FormEvent){
+    /*     console.log("!!!!!")
+        console.log("searchParams",searchParams)
+        console.log("searchParams",searchParams.keys())
+        console.log("get error",searchParams.get("error"))
+        console.log("get callbackUtl",searchParams.get("callbackUrl"))
+        console.log("!!!!!") */
+    const onSubmit: FormEventHandler = function (event: FormEvent) {
         event.preventDefault()
-        let user = signIn("credentials",{
-            username:name.current?name.current.value:null,
-            password:pwd.current?pwd.current.value:null,
-            redirect:true,
-            callbackUrl:searchParams.get("callbackUrl") || undefined,
+        let user = signIn("credentials", {
+            username: name.current ? name.current.value : null,
+            password: pwd.current ? pwd.current.value : null,
+            redirect: true,
+            callbackUrl: searchParams.get("callbackUrl") || undefined,
         })
-/*         .then((user)=>{
-            console.log("USER:",user)
-            console.log(name.current?name.current.value:null)
-            console.log(pwd.current?pwd.current.value:null)
-        }) */
     }
-    console.log("State error:",error)
+    //console.log("State error:",error)
     return (
-        <form className={error?"error":""} onSubmit={onSubmit} method="post" action="/api/auth/signin">
-            {error?<span>Wrong name or pass</span>:""}
-            <input name="" type="hidden"/>
-            <label>
-                Login name:
-                <input required ref={name} type="text" id="name" name="name" />
-            </label>
-            <label>
-                Password:
-                <input required ref={pwd} type="password" id="pwd" name="pwd" />
-            </label>
-            <button type="submit">Sign in with name</button>
-        </form>
+        <div className={styles.form_container}>
+            <form className={`${error ? `error ${styles.error_text}` : ""} ${styles.form}`} onSubmit={onSubmit} method="post" action="/api/auth/signin">
+                {error ? <span>Wrong name or pass</span> : ""}
+                <label className={styles.name_label}>
+                    Login name:
+                    <input className={styles.name_input} required ref={name} type="text" id="name" name="name" />
+                </label>
+                <label className={styles.pwd_label}>
+                    Password:
+                    <input className={styles.pwd_input} required ref={pwd} type="password" id="pwd" name="pwd" />
+                </label>
+                <button className={styles.button} type="submit">Sign in</button>
+            </form>
+        </div>
     )
 }
 

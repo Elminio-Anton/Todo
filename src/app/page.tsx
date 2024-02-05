@@ -3,6 +3,7 @@ import { getSession } from "next-auth/react";
 import { Session } from "next-auth";
 import {headers} from "next/headers"
 import Link from "next/link";
+import styles from "./page.module.scss"
 
 export default async function Home() {
     let session:any = await fetch(`http://localhost:3000/api/session`,{
@@ -20,14 +21,13 @@ export default async function Home() {
         })// satisfies Session
         console.log("button session",session)
     return (
-        <>
-            <p>
+        <div className={styles.home_container}>
+            <p className={styles.intro}>
                 Hi, it's a TODO application with time management authentication and database.
-                Vercel storage is not limited, so this application is also limited by 10 accounts 3 groups of 10 taasks for each.
+                Vercel storage is not limited, so this application is also limited by 10 accounts 3 groups of 10 tasks for each.
             </p>
-            <SignInLink sessionInfo={session}/>
-            <Link href="/signup">Sign up</Link>
-            {/* todo sign up button */}
-        </>
+            <SignInLink className={styles.sign_in} sessionInfo={session}/>
+            {session?"":<Link className={styles.sign_up} href="/signup">Sign up</Link>}
+        </div>
     )
 }

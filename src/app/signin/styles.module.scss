@@ -1,0 +1,50 @@
+@import "/src/colors.scss";
+
+.form_container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: $bg-dark;
+    .error_text{
+        text-align: center;
+        color: $error-red;
+        opacity: 0.6;
+    }
+    .form {
+        display: grid;
+        gap: 20px;
+        margin: auto;
+
+        .name_input,
+        .name_label,
+        .pwd_input,
+        .pwd_label {
+            color: $text-green-dark-color;
+            background-color: $bg-light;
+        }
+        .name_label,.pwd_label{
+            display: grid;
+            grid-auto-flow: row;
+            justify-items: center;
+            align-items: center;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .name_input,.pwd_input{
+            border: 1px solid $border-light;
+            border-radius: 5px;
+            padding: 3px;
+            font-family: inherit;
+        }
+        .button{
+            padding: 8px;
+            color: $text-green-light-color;
+            background-color: $bg-darkest;
+            font-family: inherit;
+            font-size: 16px;
+            border-color: $bg-dark;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    }
+}

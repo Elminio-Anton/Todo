@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 
-const URI = process.env.MONGO_URI || "mongodb://admin:logHY67@127.0.0.1:27017/users?authSource=users";
+const URI = process.env.MONGO_URI || "mongodb://admin:logHY67@127.0.0.1:27017?authSource=users";
 //mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000
 
 //export db

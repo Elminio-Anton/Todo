@@ -7,16 +7,16 @@ import Link from "next/link";
 ////////import { authOptions } from "../api/auth/[...nextauth]/route";
 
 
-export default function SignInLink({ sessionInfo }: { sessionInfo: Session | null }) {
+export default function SignInLink({ className="",sessionInfo }: { className?:string,sessionInfo: Session | null }) {
 
     return sessionInfo
-        ? <span onClick={() => {
+        ? <span className={className} onClick={() => {
             console.log("signin")
             signOut();}}
         >
             You ar Signed as {sessionInfo.user?.name}<br /> Sign out
         </span>
-        : <span onClick={() => {
+        : <span className={className} onClick={() => {
             console.log("awaited signin")
             signIn();
         }}>

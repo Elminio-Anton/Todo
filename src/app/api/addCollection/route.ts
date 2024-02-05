@@ -11,10 +11,13 @@ async function AddCollection(req: NextRequest) {
     const collectionExists = collections.find((collection: CollectionInfo) => collection.name === username);
 
     if (collectionExists) {
-        return NextResponse.json({ error: "User exists" }, { statusText: "User exists", status: 507 })
+        console.log("addCollection:collection exists")
+        //throw new Error("User exists")
+        return NextResponse.json({ error: "User exists" }, { statusText: "User exists already", status: 507 })
     }
-    if (collectionAmount >= 10)
+    if (collectionAmount >= 10){
         return NextResponse.json({ error: "Reached collection limit" }, { statusText: "Reached collection limit", status: 507 })
+    }
     await db.createCollection(username)
     await db.collection(username).insertOne({ pwd: password })
 
