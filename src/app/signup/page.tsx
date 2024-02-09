@@ -1,9 +1,23 @@
 "use client"
-import { FormEvent, FormEventHandler, MouseEventHandler, useRef, useState } from "react"
-import { useSearchParams } from "next/navigation";
+//import "client-only"
+import { FormEvent, FormEventHandler, MouseEventHandler, useEffect, useRef, useState } from "react"
+import { redirect, useSearchParams, useRouter } from "next/navigation";
 import styles from "../signin/styles.module.scss"
 
 export default function Form() {
+    ///it works if i'll add async but mustn't, it's client component and doesn't support async/await 
+    /*const session = await fetch(`http://localhost:3000/api/session`, {
+        method: "GET"
+    })
+    if(session!==null) redirect("/")*/
+    ///its also works but has delay
+    /*const router = useRouter()
+    fetch(`http://localhost:3000/api/session`, {
+        method: "GET"
+    })
+    .then(response => {
+      if (response) { console.log("must be redirected"); router.push("/") }
+    }) */
     const searchParams = useSearchParams();
     //const error = searchParams.get("error");
     const name = useRef<HTMLInputElement>(null)
@@ -20,7 +34,7 @@ export default function Form() {
             body: JSON.stringify({ password: pwd?.current?.value, username: name?.current?.value })
         })
             .then(resp => {
-                if(resp.status!==200){
+                if (resp.status !== 200) {
                     setError(resp.statusText)
                 }
                 console.log("response!!", resp)

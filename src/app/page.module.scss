@@ -1,14 +1,45 @@
+@import "/src/colors.scss";
 .body{
     width: 100vw;
     height: 100vh;
     font-family: 'Courier New', Courier, monospace;
-
+    background-color: $bg-light;
     .home_container{
+        margin: auto;
+        min-width: 300px;
+        max-width: 500px;
+        display: grid;
+        grid-template-areas: "intro intro" "signin signup";
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 80px;
+        align-items: center;
+        justify-items: center;
         .intro{
-            
+            color: $text-green-dark-color;
+            text-align: justify;
+            grid-area: intro;
         }
         .sign_in,.sign_up{
-
+            color: $text-green-light-color;
+            white-space: nowrap;
+            background-color: $bg-darkest;
+            display: block;
+            width: min-content;
+            height: max-content;
+            cursor: pointer;
+            text-decoration: none;
+            padding: 5px;
+            border-radius: 5px;
+            &:hover{
+                background-color: $bg-light;
+                color: $text-green-dark-color;
+            }
+        }
+        .signin{
+            grid-area:signin;
+        }
+        .signup{
+            grid-area:signup;
         }
     }
 }
